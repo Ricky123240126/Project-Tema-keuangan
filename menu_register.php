@@ -52,7 +52,7 @@
             <div class="content">
                 <h3>Register</h3>
             <hr />
-            <form action="register_proses.php" method="post">
+            <form action="proses_register.php" method="post">
                 <div class="form-group mb-2">
                     <label for="exampleInputUsername1">Username</label>
                     <input type="username" class="form-control" name="username" id="exampleInputUsername1" placeholder="username" required>
