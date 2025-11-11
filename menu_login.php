@@ -55,7 +55,7 @@ if (isset($_SESSION['username'])) {
             <div class="content">
                 <h3>Login</h3>
                 <hr />
-                <form action="proses_register.php" method="post">
+                <form action="proses_login.php" method="post">
                     <div class="form-group mb-2">
                         <label for="exampleInputUsername1">Email</label>
                         <input type="username" class="form-control" name="email" id="exampleInputEmail1"
