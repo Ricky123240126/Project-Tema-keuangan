@@ -54,8 +54,8 @@
             <hr />
             <form action="register_proses.php" method="post">
                 <div class="form-group mb-2">
-                    <label for="exampleInputUsername1">Username</label>
-                    <input type="username" class="form-control" name="username" id="exampleInputUsername1" placeholder="username" required>
+                    <label for="exampleInputUsername1">Email</label>
+                    <input type="username" class="form-control" name="email" id="exampleInputEmail1" placeholder="Email" required>
                 </div>
                 <div class="form-group mb-2">
                     <label for="exampleInputPassword1">Password</label>
@@ -65,7 +65,7 @@
                 <button type="submit" class="btn btn-primary mt-2">Login</button>
                 <hr />
                 <br>
-                <p>Belum punya akun?<a href="menu_register.php"><button type="button" class="btn btn-link">Login</button></a></p>
+                <p>Belum punya akun?<a href="menu_register.php"><button type="button" class="btn btn-link">Register</button></a></p>
             </form>
         </div>
         </span>

@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group mb-2">
                     <label for="exampleInputPassword1">Nomor Handphone</label>
-                    <input type="number" class="form-control" name="nomor handphone" id="exampleInputNomorHandphone1" placeholder="nomor hp" required>
+                    <input type="number" class="form-control" name="nomor" id="exampleInputNomorHandphone1" placeholder="nomor hp" required>
                 </div>
                 <button type="submit" class="btn btn-primary mt-2">Register</button>
                 <hr />
