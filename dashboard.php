@@ -39,13 +39,13 @@ if (!isset($_SESSION['username'])) {
                         <div class="bg-white text-primary rounded-circle me-2" style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-weight: bold;">
                             
                         </div>
-                        <span><?php echo $_SESSION['nama'];?></span>
+                        <span><?php echo $_SESSION['username'];?></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                        <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
                     </ul>
                 </div>
             </div>
