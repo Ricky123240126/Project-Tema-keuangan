@@ -78,7 +78,7 @@ if (isset($_SESSION['username'])) {
                     </div>
                     <button type="submit" class="btn btn-primary mt-2">Register</button>
                     <hr />
-                    <p>Sudah punya akun?<a href="menu_login.php">Sudah punya akun?<button type="button"
+                    <p>Sudah punya akun?<a href="menu_login.php"><button type="button"
                                 class="btn btn-link">Login</button></a>
                     </p>
                 </form>
