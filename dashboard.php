@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (isset($_SESSION['username'])) {
+    header('location: menu_login.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -28,9 +37,9 @@
                 <div class="dropdown">
                     <button class="btn btn-link text-white dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
                         <div class="bg-white text-primary rounded-circle me-2" style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                            JD
+                            
                         </div>
-                        <span>John Doe</span>
+                        <span><?php echo $_SESSION['nama'];?></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil</a></li>
