@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   
-    <title>Menu register</title>
+    <title>Menu login</title>
 </head>
 <style>
     .back {
@@ -50,7 +50,7 @@
     <div class="back">
         <div class="div-center">
             <div class="content">
-                <h3>Register</h3>
+                <h3>Login</h3>
             <hr />
             <form action="register_proses.php" method="post">
                 <div class="form-group mb-2">
@@ -58,20 +58,12 @@
                     <input type="username" class="form-control" name="username" id="exampleInputUsername1" placeholder="username" required>
                 </div>
                 <div class="form-group mb-2">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control mb-1" name="email" id="exampleInputEmail1" placeholder="Email" required>
-                </div>
-                <div class="form-group mb-2">
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password" required>
                 </div>
-                <div class="form-group mb-2">
-                    <label for="exampleInputPassword1">Nomor Handphone</label>
-                    <input type="number" class="form-control" name="nomor handphone" id="exampleInputNomorHandphone1" placeholder="nomor hp" required>
-                </div>
-                <button type="submit" class="btn btn-primary mt-2">Register</button>
+                <button type="submit" class="btn btn-primary mt-2">Login</button>
                 <hr />
-                <a href="menu_login.php">Sudah punya akun?<button type="button" class="btn btn-link">Login</button></a>
+                <a href="menu_register.php">Belum punya akun?<button type="button" class="btn btn-link">Login</button></a>
     
             </form>
         </div>
