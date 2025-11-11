@@ -61,10 +61,11 @@
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password" required>
                 </div>
+                <!-- <label><input type="checkbox">Remember me</label> <br> -->
                 <button type="submit" class="btn btn-primary mt-2">Login</button>
                 <hr />
-                <a href="menu_register.php">Belum punya akun?<button type="button" class="btn btn-link">Login</button></a>
-    
+                <br>
+                <p>Belum punya akun?<a href="menu_register.php"><button type="button" class="btn btn-link">Login</button></a></p>
             </form>
         </div>
         </span>
