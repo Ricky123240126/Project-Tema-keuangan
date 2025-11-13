@@ -237,7 +237,7 @@ session_start();
     <div class="profile-header text-center">
         <div class="container">
             <div class="position-relative d-inline-block">
-                <img src="https://ui-avatars.com/api/?name=John+Doe&size=100&background=2563eb&color=fff" alt="Profile"
+                <img src="https://ui-avatars.com/api/?name=<?php echo $_SESSION['username'];?>&size=100&background=2563eb&color=fff" alt="Profile"
                     class="profile-avatar">
                 <div class="camera-btn">
                     <i class="bi bi-camera-fill"></i>
