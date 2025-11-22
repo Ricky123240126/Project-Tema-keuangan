@@ -18,7 +18,7 @@ if (isset($_SESSION['username'])) {
 </head>
 <style>
     .back {
-        background: #e2e2e2;
+        background: #2563eb;
         width: 100%;
         position: absolute;
         top: 0;

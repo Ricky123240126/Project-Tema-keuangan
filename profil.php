@@ -237,14 +237,13 @@ session_start();
     <div class="profile-header text-center">
         <div class="container">
             <div class="position-relative d-inline-block">
-                <img src="https://ui-avatars.com/api/?name=<?php echo $_SESSION['username'];?>&size=100&background=2563eb&color=fff" alt="Profile"
-                    class="profile-avatar">
+                <img src="https://ui-avatars.com/api/?name=<?php echo $_SESSION['username']; ?>&size=100&background=2563eb&color=fff"
+                    alt="Profile" class="profile-avatar">
                 <div class="camera-btn">
                     <i class="bi bi-camera-fill"></i>
                 </div>
             </div>
-            <div class="profile-name"><?php echo $_SESSION['username']; ?></div>
-            <div class="profile-id"><?php echo $_SESSION['id']; ?></div>
+            <div class="profile-id">Id : <?php echo $_SESSION['id']; ?></div>
             <div class="mt-2">
                 <span class="verified-badge">
                     <i class="bi bi-patch-check-fill"></i> Terverifikasi
@@ -254,45 +253,60 @@ session_start();
     </div>
 
     <!-- Main Content -->
-<div class="container">
-    <!-- Personal Info -->
-    <h6 class="mb-3 fw-bold">Informasi Pribadi</h6>
+    <div class="container">
+        <!-- Personal Info -->
+        <h6 class="mb-3 fw-bold">Informasi Pribadi</h6>
 
-    <div class="card info-card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-6 mb-3">
-                    <div class="info-label">
-                        <i class="bi bi-envelope me-1"></i> Email
+        <div class="card info-card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <div class="info-label">
+                            <i class="bi bi-credit-card me-1"></i> Username
+                        </div>
+                        <div class="info-value"><?php echo $_SESSION['username']; ?></div>
                     </div>
-                    <div class="info-value"><?php echo $_SESSION['email']; ?></div>
+
+                    <div class="col-6 mb-3">
+                        <div class="info-label">
+                            <i class="bi bi-envelope me-1"></i> Email
+                        </div>
+                        <div class="info-value"><?php echo $_SESSION['email']; ?></div>
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <div class="info-label">
+                            <i class="bi bi-phone me-1"></i> No. Handphone
+                        </div>
+                        <div class="info-value"><?php echo $_SESSION['no_hp']; ?></div>
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <div class="info-label">
+                            <i class="bi bi-calendar me-1"></i> Tanggal Daftar akun
+                        </div>
+                        <div class="info-value"><?php echo $_SESSION['tanggal_daftar']; ?></div>
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <div class="info-label">
+                            <i class="bi bi-credit-card me-1"></i> PIN
+                        </div>
+                        <div class="info-value"><?php echo $_SESSION['pin']; ?></div>
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <div class="info-label">
+                            <i class="bi bi-calendar me-1"></i> Tanggal lahir
+                        </div>
+                        <div class="info-value"><?php echo $_SESSION['tanggal_lahir']; ?></div>
+                    </div>
+
                 </div>
 
-                <div class="col-6 mb-3">
-                    <div class="info-label">
-                        <i class="bi bi-phone me-1"></i> No. Handphone
-                    </div>
-                    <div class="info-value"><?php echo $_SESSION['no_hp']; ?></div>
-                </div>
-
-                <div class="col-6 mb-3">
-                    <div class="info-label">
-                        <i class="bi bi-calendar me-1"></i> Tanggal Daftar akun
-                    </div>
-                    <div class="info-value"><?php echo $_SESSION['tanggal_daftar']; ?></div>
-                </div>
-
-                <div class="col-6 mb-3">
-                    <div class="info-label">
-                        <i class="bi bi-credit-card me-1"></i> PIN
-                    </div>
-                    <div class="info-value"><?php echo $_SESSION['pin']; ?></div>
-                </div>
+                <a href="update_profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                    <i class="bi bi-pencil me-1"></i> Edit Profil
+                </a>
             </div>
-
-            <a href="#" class="btn btn-outline-primary btn-sm w-100 mt-3">
-                <i class="bi bi-pencil me-1"></i> Edit Profil
-            </a>
         </div>
     </div>
-</div>

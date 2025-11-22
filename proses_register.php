@@ -5,6 +5,7 @@ $nama = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $no_hp = $_POST['nomor'];
+$tanggal_lahir = $_POST['tanggal_lahir'];
 
 try {
     $sql = "SELECT id FROM users WHERE email = ? LIMIT 1";
@@ -19,10 +20,10 @@ try {
     }
     $stmt->close();
 
-    $sql = "INSERT INTO users (nama, email, password, no_hp) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO users (nama, email, password, no_hp, tanggal_lahir) VALUES (?, ?, ?, ?, ?)";
     $stmt = $connection->prepare($sql);
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $stmt->bind_param("ssss", $nama, $email, $hashedPassword, $no_hp);
+    $stmt->bind_param("sssss", $nama, $email, $hashedPassword, $no_hp, $tanggal_lahir);
     $stmt->execute();
 
     header("Location: menu_login.php");

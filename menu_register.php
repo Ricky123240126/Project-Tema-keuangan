@@ -18,7 +18,7 @@ if (isset($_SESSION['username'])) {
 </head>
 <style>
     .back {
-        background: #e2e2e2;
+        background: #2563eb;
         width: 100%;
         position: absolute;
         top: 0;
@@ -69,12 +69,17 @@ if (isset($_SESSION['username'])) {
                     <div class="form-group mb-2">
                         <label for="exampleInputPassword1">Password</label>
                         <input type="password" class="form-control" name="password" id="exampleInputPassword1"
-                            placeholder="Password" required>
+                        placeholder="Password" required>
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputPassword1">Nomor Handphone</label>
                         <input type="number" class="form-control" name="nomor" id="exampleInputNomorHandphone1"
-                            placeholder="nomor hp" required>
+                        placeholder="nomor hp" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="exampleInputEmail1">Tanggal lahir</label>
+                        <input type="date" class="form-control mb-1" name="tanggal_lahir" id="exampleInputTanggal1"
+                            required>
                     </div>
                     <button type="submit" class="btn btn-primary mt-2">Register</button>
                     <hr />

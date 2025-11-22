@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['id'] = $user['id'];
             $_SESSION['tanggal_daftar'] = $user['tanggal_daftar'];
             $_SESSION['pin'] = $user['pin'];
+            $_SESSION['tanggal_lahir'] = $user['tanggal_lahir'];
             header("Location: dashboard.php");
             exit();
         } else {

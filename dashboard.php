@@ -19,7 +19,6 @@ if (!isset($_SESSION['username'])) {
             background-color: #f8f9fa;
         }
 
-        /* Sidebar */
         .sidebar {
             position: fixed;
             top: 0;
