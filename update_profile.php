@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,24 +70,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
-<div class="card shadow-lg">
-    <h3 class="text-center mb-2">🔒 Lengkapi Akun</h3>
-    <p class="text-center text-muted">Buat PIN sebelum melanjutkan</p>
+    <div class="card shadow-lg">
+        <h3 class="text-center mb-2">🔒 Lengkapi Akun</h3>
+        <p class="text-center text-muted">Buat PIN sebelum melanjutkan</p>
 
-    <form method="POST">
+        <form method="POST">
 
-        <div class="mb-3">
-            <label class="form-label">PIN (6 digit)</label>
-            <input type="password" name="pin" maxlength="6" class="form-control" placeholder="••••••" required>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">PIN (6 digit)</label>
+                <input type="password" name="pin" maxlength="6" class="form-control" placeholder="••••••" required>
+            </div>
 
-        <button type="submit" class="btn btn-primary w-100 fw-bold">Simpan PIN</button>
-    </form>
+            <button type="submit" class="btn btn-primary w-100 fw-bold">Simpan PIN</button>
+            <a href="profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                <i class="bi bi-pencil me-1"></i> kembali
+            </a>
+        </form>
 
-    <p class="text-center mt-3 text-muted" style="font-size: 12px">
-        PIN akan digunakan saat transaksi untuk keamanan.
-    </p>
-</div>
+        <p class="text-center mt-3 text-muted" style="font-size: 12px">
+            PIN akan digunakan saat transaksi untuk keamanan.
+        </p>
+    </div>
 
 </body>
+
 </html>

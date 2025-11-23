@@ -1,5 +1,45 @@
 <?php
 session_start();
+include 'connect.php';
+
+if (!isset($_SESSION['email'])) {
+    header('location: menu_login.php');
+    exit();
+}
+
+$email = $_SESSION['email'];
+
+$stmt = $connection->prepare("SELECT * FROM users WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (is_null($user['pin']) || $user['pin'] === null) {
+    echo "<script>alert('Silahkan lengkapi pin terlebih dahulu!'); window.location='update_profile.php';</script>";
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $pin = $_POST['pin'];
+    $nomor = $_POST['nomor'];
+    $tanggal = $_POST['tanggal'];
+    
+    if (strlen($pin) != 6) {
+        echo "<script>alert('PIN harus 6 digit!');</script>";
+    } else {
+        $stmt = $connection->prepare("UPDATE users SET nama=?, pin=?, nomor_telepon=?, tanggal_lahir=? WHERE email=?");
+        $stmt->bind_param("sssss", $username, $pin, $nomor, $tanggal, $email);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Update Profil Berhasil!'); window.location='profil.php';</script>";
+            exit();
+        } else {
+            echo "<script>alert('Update Profil Gagal!'); window.location='edit_profile.php';</script>";
+        }
+    }
+}
 ?>
 
 <!doctype html>
@@ -64,7 +104,7 @@ session_start();
             <div class="content">
                 <h3>Update Profil</h3>
                 <hr />
-                <form action="*" method="post">
+                <form method="post">
                     <div class="form-group mb-2">
                         <label for="exampleInputUsername1">Username</label>
                         <input type="username" class="form-control" name="username" id="exampleInputUsername1"
@@ -72,8 +112,8 @@ session_start();
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputPin1">PIN</label>
-                        <input type="number" class="form-control" name="pin" id="exampleInputPin1"
-                            placeholder="Pin" required>
+                        <input type="number" class="form-control" name="pin" id="exampleInputPin1" placeholder="Pin"
+                            required>
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputNomor1">Nomor Handphone</label>
@@ -82,13 +122,14 @@ session_start();
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputTanggal1">Tanggal Lahir</label>
-                        <input type="date" class="form-control" name="tanggal" id="exampleInputTanggal1"
-                            required>
+                        <input type="date" class="form-control" name="tanggal" id="exampleInputTanggal1" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-2">Update</button>
-                    <br>
-                    <button class="btn btn-link btn-primary"> <a href="profil.php">Kembali</a></button>
-                    <hr />
+                    <a href="edit_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3" type="submit">
+                        <i class="bi bi-pencil me-1"></i> Update Profil
+                    </a>
+                    <a href="profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                        <i class="bi bi-pencil me-1"></i> kembali
+                    </a>
                 </form>
             </div>
             </span>

@@ -303,9 +303,11 @@ session_start();
                     </div>
 
                 </div>
-
-                <a href="update_profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
-                    <i class="bi bi-pencil me-1"></i> Edit Profil
+                <a href="update_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                    <i class="bi bi-pencil me-1"></i> Update PIN
+                </a>
+                <a href="edit_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                    <i class="bi bi-pencil me-1"></i> Update Profil
                 </a>
             </div>
         </div>

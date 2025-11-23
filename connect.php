@@ -8,7 +8,6 @@
 
     try {
         $connection = new mysqli($hostname, $username_DB, $password_DB, $database);
-        echo "koneksi ke database berhasil";
     } catch (Exception $e) {
         echo $e;
     }
