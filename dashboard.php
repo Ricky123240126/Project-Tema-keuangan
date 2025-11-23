@@ -1,9 +1,21 @@
 <?php
 session_start();
-
+include 'connect.php';
 if (!isset($_SESSION['username'])) {
     header('location: menu_login.php');
 }
+$user_id = $_SESSION['id'];
+$stmt = $connection->prepare("
+    SELECT t.*, u.nama AS penerima_nama 
+    FROM transactions t
+    LEFT JOIN users u ON t.penerima_id = u.id
+    WHERE t.user_id = ?
+    ORDER BY t.tanggal_transaksi DESC
+");
+
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -130,37 +142,49 @@ if (!isset($_SESSION['username'])) {
 
         <div class="card transaction-card">
             <div class="card-body">
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <div class="transaction-item d-flex justify-content-between">
 
-                <div class="transaction-item d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-arrow-up-right text-danger fs-4 me-3"></i>
-                        <div>
-                            <h6 class="mb-0">Transfer</h6>
-                            <small class="text-muted">ke: Budi Santoso</small>
+                        <div class="d-flex align-items-center">
+                            <?php if ($result->num_rows === 0): ?>
+                                <p class="text-center text-muted">Belum ada transaksi.</p>
+                            <?php endif; ?>
+
+                            <div class="me-3">
+                                <?php if ($row['jenis_transaksi'] == 'top_up'): ?>
+                                    <i class="bi bi-arrow-down-left text-success"></i>
+                                <?php elseif ($row['jenis_transaksi'] == 'transfer'): ?>
+                                    <i class="bi bi-arrow-up-right text-danger"></i>
+                                <?php endif; ?>
+                            </div>
+
+                            <div>
+                                <h6 class="mb-0">
+                                    <?= ucfirst(str_replace('_', ' ', $row['jenis_transaksi'])) ?>
+                                </h6>
+
+                                <?php if ($row['jenis_transaksi'] == 'transfer'): ?>
+                                    <small class="text-muted">ke: <?= $row['penerima_nama'] ?></small>
+                                <?php elseif ($row['jenis_transaksi'] == 'top_up'): ?>
+                                    <small class="text-muted">Saldo sebelum: Rp
+                                        <?= number_format($row['saldo_sebelum']) ?></small>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <?php if ($row['jenis_transaksi'] == 'top_up'): ?>
+                                <div class="amount-positive">+Rp <?= number_format($row['nominal']) ?></div>
+                            <?php elseif ($row['jenis_transaksi'] == 'transfer'): ?>
+                                <div class="amount-negative">-Rp <?= number_format($row['nominal']) ?></div>
+                            <?php endif; ?>
+
+                            <small class="text-muted">
+                                <?= date("d M Y, H:i", strtotime($row['tanggal_transaksi'])) ?>
+                            </small>
                         </div>
                     </div>
-
-                    <div class="text-end">
-                        <div class="amount-negative">-Rp 50.000</div>
-                        <small class="text-muted">05 Nov 2025</small>
-                    </div>
-                </div>
-
-                <div class="transaction-item d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-arrow-down-left text-success fs-4 me-3"></i>
-                        <div>
-                            <h6 class="mb-0">Top Up</h6>
-                            <small class="text-muted">via: Bank BCA</small>
-                        </div>
-                    </div>
-
-                    <div class="text-end">
-                        <div class="amount-positive">+Rp 100.000</div>
-                        <small class="text-muted">04 Nov 2025</small>
-                    </div>
-                </div>
-
+                <?php endwhile; ?>
             </div>
         </div>
     </div>
