@@ -8,6 +8,7 @@ if (!isset($_SESSION['username'])) {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -119,13 +120,13 @@ if (!isset($_SESSION['username'])) {
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <a href="#" class="active"><i class="bi bi-house-door-fill"></i> Beranda</a>
         <a href="#"><i class="bi bi-clock-history"></i> Riwayat</a>
         <a href="#"><i class="bi bi-credit-card"></i> Kartu</a>
-        <a href="logout.php" class="text-danger mt-auto"><i class="bi bi-box-arrow-right"></i> Keluar</a>
     </div>
 
     <!-- Navbar -->
@@ -137,19 +138,25 @@ if (!isset($_SESSION['username'])) {
             <div class="d-flex align-items-center ms-auto">
                 <button class="btn btn-link text-white position-relative me-3">
                     <i class="bi bi-bell fs-5"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                    <span
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
                 </button>
 
                 <div class="dropdown">
                     <button class="btn btn-link text-white dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="bi bi-person-circle fs-4 me-2"></i>
-                        <span><?php echo $_SESSION['username'];?></span>
+                        <span><?php echo $_SESSION['username']; ?></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="profil.php"><i class="bi bi-person me-2"></i>Profil</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="delete_akun.php"
+                                onclick="return confirm('Yakin mau hapus akun? Semua data akan hilang!');"><i
+                                    class="bi bi-basket me-2"></i>hapus akun</a></li>
+                        <li><a class="dropdown-item text-danger" href="logout.php"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
                     </ul>
                 </div>
             </div>
@@ -160,7 +167,7 @@ if (!isset($_SESSION['username'])) {
     <div id="mainContent" class="main-content">
         <div class="balance-card">
             <div class="mb-2"><i class="bi bi-credit-card"></i> Saldo Anda</div>
-            <div class="balance-amount"><?php echo $_SESSION['saldo'];?></div>
+            <div class="balance-amount"><?php echo $_SESSION['saldo']; ?></div>
             <div class="d-flex gap-2">
                 <button class="btn btn-light"><i class="bi bi-plus-circle me-1"></i> Top Up</button>
                 <button class="btn btn-outline-light"><i class="bi bi-arrow-right-circle me-1"></i> Transfer</button>
@@ -193,14 +200,6 @@ if (!isset($_SESSION['username'])) {
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="card text-center p-3">
-                    <div class="card-body">
-                        <div>⚙️</div>
-                        <h6>Pengaturan</h6>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -213,7 +212,9 @@ if (!isset($_SESSION['username'])) {
                 <div class="transaction-item d-flex justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="me-3 text-danger"><i class="bi bi-arrow-up-right"></i></div>
-                        <div><h6 class="mb-0">Transfer</h6><small class="text-muted">ke: Budi Santoso</small></div>
+                        <div>
+                            <h6 class="mb-0">Transfer</h6><small class="text-muted">ke: Budi Santoso</small>
+                        </div>
                     </div>
                     <div class="text-end">
                         <div class="amount-negative">-Rp 50.000</div>
@@ -224,7 +225,9 @@ if (!isset($_SESSION['username'])) {
                 <div class="transaction-item d-flex justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="me-3 text-success"><i class="bi bi-arrow-down-left"></i></div>
-                        <div><h6 class="mb-0">Top Up</h6><small class="text-muted">via: Bank BCA</small></div>
+                        <div>
+                            <h6 class="mb-0">Top Up</h6><small class="text-muted">via: Bank BCA</small>
+                        </div>
                     </div>
                     <div class="text-end">
                         <div class="amount-positive">+Rp 100.000</div>
@@ -247,4 +250,5 @@ if (!isset($_SESSION['username'])) {
         });
     </script>
 </body>
+
 </html>
