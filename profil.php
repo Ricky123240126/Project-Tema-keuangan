@@ -21,13 +21,11 @@ session_start();
             padding-bottom: 80px;
         }
 
-        /* Navbar Custom */
         .navbar-custom {
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Profile Header */
         .profile-header {
             background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
             color: white;
@@ -246,7 +244,7 @@ session_start();
             <div class="profile-id">Id : <?php echo $_SESSION['id']; ?></div>
             <div class="mt-2">
                 <span class="verified-badge">
-                    <i class="bi bi-patch-check-fill"></i> Terverifikasi
+                    <i class="bi bi-patch-check-fill"></i><?php echo $_SESSION['status']; ?>
                 </span>
             </div>
         </div>
@@ -262,7 +260,7 @@ session_start();
                 <div class="row">
                     <div class="col-6 mb-3">
                         <div class="info-label">
-                            <i class="bi bi-credit-card me-1"></i> Username
+                            <i class="bi bi-person-circle me-1"></i> Username
                         </div>
                         <div class="info-value"><?php echo $_SESSION['username']; ?></div>
                     </div>
