@@ -48,8 +48,8 @@
             <a href="profil.php" class="btn btn-link text-white">
                 <i class="bi bi-arrow-left fs-5"></i>
             </a>
-            <span class="text-white fw-bold">Update Profil</span>
-            <a href="#" class="btn btn-link text-white">
+            <span class="text-white fw-bold">Top Up</span>
+            <a href="dashboard.php" class="btn btn-link text-white">
                 <i class="bi bi-three-dots-vertical fs-5"></i>
             </a>
         </div>
@@ -60,29 +60,38 @@
             <div class="content">
                 <h3>Top Up</h3>
                 <hr />
-                <form method="post">
+                <form action="proses_topup.php" method="post">
                     <div class="form-group mb-2">
-                        <label for="exampleInputUsername1">Username</label>
-                        <input type="username" class="form-control" name="username" id="exampleInputUsername1"
-                            placeholder="username" required>
+                        <label for="exampleInputNominal1">Nominal:</label>
+                        <input type="number" class="form-control" name="nominal" id="exampleInputNominal1"
+                            placeholder="Masukkan nominal top up" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="exampleInputNominal1">Metode Pembayaran:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="transfer_bank" id="radioDefault1">
+                            <label class="form-check-label" for="radioDefault1">
+                                Transfer bank
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="virtual_akun" id="radioDefault2">
+                            <label class="form-check-label" for="radioDefault2">
+                                Transfer virtual akun
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="minimarket" id="radioDefault3">
+                            <label class="form-check-label" for="radioDefault2">
+                                Minimarket
+                            </label>
+                        </div>
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputPin1">PIN</label>
-                        <input type="number" class="form-control" name="pin" id="exampleInputPin1" placeholder="Pin"
-                            required>
+                        <input type="text" maxlength="6" pattern="[0-9]{6}" class="form-control" name="pin" placeholder="masukkan angka 0-9" required>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="exampleInputNomor1">Nomor Handphone</label>
-                        <input type="number" class="form-control" name="nomor" id="exampleInputNomor1"
-                            placeholder="nomor hp" required>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="exampleInputTanggal1">Tanggal Lahir</label>
-                        <input type="date" class="form-control" name="tanggal" id="exampleInputTanggal1" required>
-                    </div>
-                    <a href="edit_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3" type="submit">
-                        <i class="bi bi-pencil me-1"></i> Update Profil
-                    </a>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Konfirmasi</button>
                     <a href="profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                         <i class="bi bi-pencil me-1"></i> kembali
                     </a>

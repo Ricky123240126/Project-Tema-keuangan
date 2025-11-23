@@ -25,14 +25,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pin = $_POST['pin'];
     $nomor = $_POST['nomor'];
     $tanggal = $_POST['tanggal'];
-    
+
     if (strlen($pin) != 6) {
         echo "<script>alert('PIN harus 6 digit!');</script>";
     } else {
-        $stmt = $connection->prepare("UPDATE users SET nama=?, pin=?, nomor_telepon=?, tanggal_lahir=? WHERE email=?");
-        $stmt->bind_param("sssss", $username, $pin, $nomor, $tanggal, $email);
+        $stmt = $connection->prepare("UPDATE users SET nama=?, pin=?, no_hp=?, tanggal_lahir=? WHERE email=?");
+        $stmt->bind_param("sisss", $username, $pin, $nomor, $tanggal, $email);
 
         if ($stmt->execute()) {
+            // Update session agar berubah tanpa login ulang
+            $_SESSION['username'] = $username;
+            $_SESSION['pin'] = $pin;
+            $_SESSION['no_hp'] = $nomor;
+            $_SESSION['tanggal_lahir'] = $tanggal;
             echo "<script>alert('Update Profil Berhasil!'); window.location='profil.php';</script>";
             exit();
         } else {
@@ -124,9 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="exampleInputTanggal1">Tanggal Lahir</label>
                         <input type="date" class="form-control" name="tanggal" id="exampleInputTanggal1" required>
                     </div>
-                    <a href="edit_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3" type="submit">
-                        <i class="bi bi-pencil me-1"></i> Update Profil
-                    </a>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Konfirmasi perubahan</button>
                     <a href="profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                         <i class="bi bi-pencil me-1"></i> kembali
                     </a>

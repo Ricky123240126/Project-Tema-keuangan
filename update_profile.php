@@ -14,6 +14,7 @@ $user = $result->fetch_assoc();
 
 // Jika user sudah punya PIN, tidak boleh buka halaman ini lagi
 if (!empty($user['pin'])) {
+    echo "<script>alert('Hanya bisa pertama kali!');</script>";
     header("Location: dashboard.php");
     exit();
 }
