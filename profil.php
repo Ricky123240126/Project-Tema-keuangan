@@ -237,9 +237,6 @@ session_start();
             <div class="position-relative d-inline-block">
                 <img src="https://ui-avatars.com/api/?name=<?php echo $_SESSION['username']; ?>&size=100&background=2563eb&color=fff"
                     alt="Profile" class="profile-avatar">
-                <div class="camera-btn">
-                    <i class="bi bi-camera-fill"></i>
-                </div>
             </div>
             <div class="profile-id">Id : <?php echo $_SESSION['id']; ?></div>
             <div class="mt-2">
@@ -290,7 +287,17 @@ session_start();
                         <div class="info-label">
                             <i class="bi bi-credit-card me-1"></i> PIN
                         </div>
-                        <div class="info-value"><?php echo $_SESSION['pin']; ?></div>
+                        <div class="info-value">
+                            <?php if (!empty($_SESSION['pin']) && $_SESSION['pin'] !== null): ?>
+                                <div class="info-value pin-hidden" id="pinValue">
+                                    ******
+                                </div>
+                            <?php else: ?>
+                                <div class="info-value text-danger">
+                                    <small>Belum diatur</small>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
                     <div class="col-6 mb-3">
