@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($konfirm_pin === $pin_asli) {
         $_SESSION['pin_verified'] = true;
-        $_SESSION['pin_verified_time'] = time(); // Timestamp verifikasi
+        $_SESSION['pin_verified_time'] = time(); 
         
         echo "<script>
             alert('PIN terverifikasi! Silakan lanjut ke menu update profil.');

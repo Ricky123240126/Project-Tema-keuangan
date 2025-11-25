@@ -32,8 +32,10 @@ $result = $stmt->get_result();
 
     <style>
         body {
-            background-color: #f0f2f5;
+            background: linear-gradient(135deg, #fff4e6, #ffe8cc, #ffd8a8);
+            background-attachment: fixed;
         }
+
 
         form {
             margin-left: 20px;
