@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <style>
         body {
-            background: #e6f2ff;
+            background: #0d6efd;
             display: flex;
             justify-content: center;
             align-items: center;
