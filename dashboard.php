@@ -32,11 +32,9 @@ $result = $stmt->get_result();
 
     <style>
         body {
-            background: linear-gradient(135deg, #fff4e6, #ffe8cc, #ffd8a8);
+            background: linear-gradient(135deg, #ffffff, #f2f2f2, #e6e6e6);
             background-attachment: fixed;
         }
-
-
         form {
             margin-left: 20px;
         }
@@ -143,9 +141,12 @@ $result = $stmt->get_result();
         <!-- Transaksi -->
         <h5 class="mb-3">Transaksi Terakhir</h5>
         <div class="card transaction-card">
+
+        </div>
+        <div class="card transaction-card">
             <br>
             <form action="search_transaksi.php" method="get" class="mb-3 d-flex gap-2">
-                <h4>Search Riwayat Transaksi</h4>
+                <h4>Sort Riwayat Transaksi</h4>
                 <select name="jenis" class="form-control" style="max-width: 200px;">
                     <option value="">Semua Jenis</option>
                     <option value="top_up">Top Up</option>

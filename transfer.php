@@ -92,7 +92,7 @@ if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] ==
                                 placeholder="masukkan angka 0-9" required>
                         </div>
                         <button type="submit" class="btn btn-primary w-100 fw-bold">Konfirmasi</button>
-                        <a href="profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                        <a href="dashboard.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                             <i class="bi bi-pencil me-1"></i> kembali
                         </a>
                     </form>

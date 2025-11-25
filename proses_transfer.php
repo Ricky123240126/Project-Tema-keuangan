@@ -64,6 +64,8 @@ $stmt = $connection->prepare("UPDATE users SET saldo=? WHERE id=?");
 $stmt->bind_param("di", $saldo_pengirim_baru, $pengirim_id);
 $stmt->execute();
 
+$_SESSION['saldo'] = $saldo_pengirim_baru;
+
 $stmt = $connection->prepare("UPDATE users SET saldo=? WHERE id=?");
 $stmt->bind_param("di", $saldo_penerima_baru, $penerima_id);
 $stmt->execute();
