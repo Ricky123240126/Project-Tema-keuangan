@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
 
         <p class="text-center mt-3 text-muted" style="font-size: 12px">
-            PIN akan digunakan saat transaksi untuk keamanan.
+            PIN akan digunakan saat transaksi dan update profil untuk keamanan.
         </p>
     </div>
 
