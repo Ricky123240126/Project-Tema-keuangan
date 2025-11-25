@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] === '' || empty($_SESSION['pin'])) {
+    echo "<script>
+        alert('Silahkan lengkapi PIN terlebih dahulu!'); 
+        window.location='update_profile.php';
+    </script>";
+    exit();
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -89,7 +100,7 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputPin1">PIN</label>
-                        <input type="text" maxlength="6" pattern="[0-9]{6}" class="form-control" name="pin" placeholder="masukkan angka 0-9" required>
+                        <input type="password" maxlength="6" pattern="[0-9]{6}" class="form-control" name="pin" placeholder="masukkan angka 0-9" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 fw-bold">Konfirmasi</button>
                     <a href="profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">

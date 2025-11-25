@@ -35,19 +35,20 @@ $result = $stmt->get_result();
             background-color: #f0f2f5;
         }
 
-        /* Navbar */
+        form {
+            margin-left: 20px;
+        }
+
         .navbar-custom {
             background-color: #0d6efd;
         }
 
-        /* Konten utama */
         .main-content {
             padding: 30px;
             max-width: 900px;
             margin: 0 auto;
         }
 
-        /* Card saldo */
         .balance-card {
             background-color: #0d6efd;
             color: white;
@@ -62,7 +63,6 @@ $result = $stmt->get_result();
             font-weight: bold;
         }
 
-        /* Card transaksi */
         .transaction-card {
             border-radius: 18px;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
@@ -140,8 +140,18 @@ $result = $stmt->get_result();
 
         <!-- Transaksi -->
         <h5 class="mb-3">Transaksi Terakhir</h5>
-
         <div class="card transaction-card">
+            <br>
+            <form action="search_transaksi.php" method="get" class="mb-3 d-flex gap-2">
+                <h4>Search Riwayat Transaksi</h4>
+                <select name="jenis" class="form-control" style="max-width: 200px;">
+                    <option value="">Semua Jenis</option>
+                    <option value="top_up">Top Up</option>
+                    <option value="transfer">Transfer</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Cari</button>
+            </form>
+
             <div class="card transaction-card">
                 <div class="card-body">
                     <?php if ($result->num_rows === 0): ?>

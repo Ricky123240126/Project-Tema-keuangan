@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] === '' || empty($_SESSION['pin'])) {
+    echo "<script>
+        alert('Silahkan lengkapi PIN terlebih dahulu!'); 
+        window.location='update_profile.php';
+    </script>";
+    exit();
+}
+?>
+
 <!doctype html>
 <html lang="en">
 

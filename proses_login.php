@@ -14,7 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
+
         if (password_verify($password, $user['password'])) {
+            //update status akun menjadi 'active'
+            $stmt_update = $connection->prepare("UPDATE users SET status = 'active' WHERE email = ?");
+            $stmt_update->bind_param("s", $email);
+            $stmt_update->execute();
+            $stmt_update->close();
+
             $_SESSION['username'] = $user['nama'];
             $_SESSION['saldo'] = $user['saldo'];
             $_SESSION['email'] = $user['email'];
@@ -23,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['tanggal_daftar'] = $user['tanggal_daftar'];
             $_SESSION['pin'] = $user['pin'];
             $_SESSION['tanggal_lahir'] = $user['tanggal_lahir'];
-            $_SESSION['status'] = $user['status'];
+            $_SESSION['status'] = 'active';
             header("Location: dashboard.php");
             exit();
         } else {
