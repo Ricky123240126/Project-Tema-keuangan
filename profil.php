@@ -309,7 +309,7 @@ session_start();
 
                 </div>
                 <a href="update_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
-                    <i class="bi bi-pencil me-1"></i> Update PIN
+                    <i class="bi bi-pencil me-1"></i> Update PIN Pertama Kali
                 </a>
                 <a href="edit_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                     <i class="bi bi-pencil me-1"></i> Update Profil
