@@ -20,7 +20,7 @@ if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] ==
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
         .back {
-            background: #2563eb;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             width: 100%;
             position: absolute;
             top: 0;
@@ -81,26 +81,26 @@ if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] ==
                     <div class="form-group mb-2">
                         <label for="exampleInputNominal1">Metode Pembayaran:</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="transfer_bank" id="radioDefault1" value="1" required>
+                            <input class="form-check-input" type="radio" name="transfer_bank" id="radioDefault1" value="1">
                             <label class="form-check-label" for="radioDefault1">
                                 Transfer bank
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="virtual_akun" id="radioDefault2" value="1" required>
+                            <input class="form-check-input" type="radio" name="virtual_akun" id="radioDefault2" value="2">
                             <label class="form-check-label" for="radioDefault2">
                                 Transfer virtual akun
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="minimarket" id="radioDefault3" value="1" required>
+                            <input class="form-check-input" type="radio" name="minimarket" id="radioDefault3" value="3">
                             <label class="form-check-label" for="radioDefault3">
                                 Minimarket
                             </label>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 fw-bold">Lanjutkan</button>
-                    <a href="profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                    <a href="dashboard.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                         <i class="bi bi-pencil me-1"></i> kembali
                     </a>
                 </form>

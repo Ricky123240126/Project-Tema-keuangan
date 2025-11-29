@@ -1,34 +1,23 @@
 <?php
 session_start();
-include 'connect.php';
+include 'connect.php'; // Pastikan koneksi database benar
 
 if (!isset($_SESSION['id'])) {
     header('location: menu_login.php');
     exit();
 }
 
-
-if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] === '') {
-    echo "<script>
-        alert('PIN Anda belum diatur! Silakan atur PIN terlebih dahulu.');
-        window.location='update_profile.php';
-    </script>";
-    exit();
-}
-
 $id = $_SESSION['id'];
+$pin_session = $_SESSION['pin'] ?? '';
 
+// Cek User
 $stmt = $connection->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+$user = $stmt->get_result()->fetch_assoc();
 
 if (!$user) {
-    echo "<script>
-        alert('Data user tidak ditemukan!');
-        window.location='menu_login.php';
-    </script>";
+    echo "<script>alert('User tidak ditemukan!'); window.location='menu_login.php';</script>";
     exit();
 }
 
@@ -36,27 +25,84 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $konfirm_pin = $_POST['konfirm_pin'];
     $pin_asli = $user['pin']; 
 
-    if (!preg_match('/^\d{6}$/', $konfirm_pin)) {
-        echo "<script>
-            alert('PIN harus 6 digit angka!');
-            window.location='verifikasi_pin_transaksi.php';
-        </script>";
-        exit();
-    }
-
     if ($konfirm_pin === $pin_asli) {
-        $_SESSION['pin_verified'] = true;
-        $_SESSION['pin_verified_time'] = time(); 
+        // --- LOGIKA UPDATE DATABASE DIMULAI DI SINI ---
         
-        echo "<script>
-            alert('PIN terverifikasi! Transaksi berhasil.');
-            window.location='dashboard.php';
-        </script>";
-        exit();
+        // 1. Ambil data dari session (dari konfirmasi_topup.php)
+        if (!isset($_SESSION['topup_nominal'])) {
+            echo "<script>alert('Sesi habis, ulangi transaksi.'); window.location='topup.php';</script>";
+            exit();
+        }
+
+        $nominal = $_SESSION['topup_nominal'];
+        $metode_raw = $_SESSION['topup_metode']; // Isinya misal "Transfer Bank"
+        
+        // 2. Mapping Metode Pembayaran agar sesuai ENUM Database
+        // Database ENUM: 'bank_transfer','virtual_akun','minimarket'
+        $metode_db = '';
+        if ($metode_raw == 'Transfer Bank') {
+            $metode_db = 'bank_transfer';
+        } elseif ($metode_raw == 'Virtual Account') {
+            $metode_db = 'virtual_akun';
+        } else {
+            $metode_db = 'minimarket';
+        }
+
+        $saldo_sebelum = $user['saldo'];
+        $saldo_sesudah = $saldo_sebelum + $nominal;
+
+        // Mulai Transaksi Database agar aman
+        $connection->begin_transaction();
+
+        try {
+            // A. Update Saldo User
+            $stmt = $connection->prepare("UPDATE users SET saldo = ? WHERE id = ?");
+            $stmt->bind_param("di", $saldo_sesudah, $id);
+            $stmt->execute();
+
+            // B. Insert ke tabel 'transactions'
+            // Perhatikan: tabel transactions tidak punya kolom metode_pembayaran, jadi jangan dimasukkan di sini
+            $stmt = $connection->prepare("
+                INSERT INTO transactions (user_id, jenis_transaksi, nominal, saldo_sebelum, saldo_sesudah, status)
+                VALUES (?, 'top_up', ?, ?, ?, 'success')
+            ");
+            $stmt->bind_param("iddd", $id, $nominal, $saldo_sebelum, $saldo_sesudah);
+            $stmt->execute();
+            
+            // Ambil ID transaksi yang baru saja dibuat
+            $transaction_id = $connection->insert_id;
+
+            // C. Insert ke tabel 'topup_history'
+            $stmt = $connection->prepare("
+                INSERT INTO topup_history (transaction_id, user_id, metode_pembayaran)
+                VALUES (?, ?, ?)
+            ");
+            $stmt->bind_param("iis", $transaction_id, $id, $metode_db);
+            $stmt->execute();
+
+            // Jika semua lancar, simpan perubahan
+            $connection->commit();
+            
+            // Hapus session
+            unset($_SESSION['topup_nominal']);
+            unset($_SESSION['topup_metode']);
+
+            echo "<script>
+                alert('Top Up Berhasil sebesar Rp " . number_format($nominal,0,',','.') . "');
+                window.location='dashboard.php';
+            </script>";
+            exit();
+
+        } catch (Exception $e) {
+            $connection->rollback();
+            echo "<script>alert('Gagal: " . $e->getMessage() . "'); window.location='topup.php';</script>";
+            exit();
+        }
+
     } else {
         echo "<script>
-            alert('PIN yang Anda masukkan salah!');
-            window.location='verifikasi_pin_transaksi.php';
+            alert('PIN Salah!');
+            window.location='verifikasi_pin_topup.php';
         </script>";
         exit();
     }
@@ -65,120 +111,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verifikasi PIN - MyWallet</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-
     <style>
-        body {
-            background: #0d6efd;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .card {
-            width: 100%;
-            max-width: 400px;
-            padding: 30px;
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .lock-icon {
-            font-size: 4rem;
-            color: #667eea;
-            margin-bottom: 20px;
-        }
-
-        input[type="password"] {
-            text-align: center;
-            letter-spacing: 8px;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        input[type="password"]::placeholder {
-            letter-spacing: 3px;
-            font-size: 20px;
-        }
-
-        .btn-primary {
-            background: #0d6efd;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-
-        .btn-primary:hover {
-            background: #0d6efd;
-            transform: translateY(-2px);
-        }
-
-        .security-info {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
+        body { background: #0d6efd; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { width: 100%; max-width: 400px; padding: 30px; border-radius: 20px; border: none; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); }
+        .lock-icon { font-size: 4rem; color: #667eea; margin-bottom: 20px; }
+        input[type="password"] { text-align: center; letter-spacing: 8px; font-size: 24px; font-weight: bold; padding: 15px; border-radius: 10px; }
+        .btn-primary { background: #0d6efd; border: none; padding: 12px; border-radius: 10px; font-size: 16px; }
     </style>
 </head>
-
 <body>
-
     <div class="card">
         <div class="text-center">
             <i class="bi bi-shield-lock-fill lock-icon"></i>
             <h3 class="mb-2">🔒 Verifikasi PIN</h3>
-            <p class="text-muted">Masukkan PIN Anda untuk melanjutkan</p>
+            <p class="text-muted">Masukkan PIN Anda untuk konfirmasi Top Up</p>
         </div>
-
         <form method="POST" autocomplete="off">
             <div class="mb-4">
-                <label class="form-label fw-bold">
-                    <i class="bi bi-lock-fill me-1"></i> PIN (6 digit)
-                </label>
-                <input 
-                    type="password" 
-                    name="konfirm_pin" 
-                    maxlength="6" 
-                    pattern="[0-9]{6}"
-                    class="form-control" 
-                    placeholder="••••••" 
-                    autofocus
-                    required>
-                <small class="text-muted">Masukkan 6 digit angka PIN Anda</small>
+                <input type="password" name="konfirm_pin" maxlength="6" pattern="[0-9]{6}" class="form-control" placeholder="••••••" autofocus required>
             </div>
-
-            <button type="submit" class="btn btn-primary w-100 fw-bold">
-                <i class="bi bi-check-circle me-1"></i> Verifikasi PIN
-            </button>
-
-            <a href="profil.php" class="btn btn-outline-secondary w-100 mt-2">
-                <i class="bi bi-arrow-left me-1"></i> Kembali
-            </a>
+            <button type="submit" class="btn btn-primary w-100 fw-bold">Verifikasi PIN</button>
+            <a href="konfirmasi_topup.php" class="btn btn-outline-secondary w-100 mt-2">Kembali</a>
         </form>
-
-        <div class="security-info">
-            <small class="text-muted">
-                <i class="bi bi-info-circle-fill me-1"></i>
-                <strong>Keamanan Akun:</strong><br>
-                PIN digunakan untuk verifikasi transaksi dan perubahan data sensitif.
-            </small>
-        </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
