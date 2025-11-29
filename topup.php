@@ -71,38 +71,35 @@ if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] ==
             <div class="content">
                 <h3>Top Up</h3>
                 <hr />
-                <form action="proses_topup.php" method="post">
+                <form action="konfirmasi_topup.php" method="post">
                     <div class="form-group mb-2">
                         <label for="exampleInputNominal1">Nominal:</label>
                         <input type="number" class="form-control" name="nominal" id="exampleInputNominal1"
-                            placeholder="Masukkan nominal top up" required>
+                            placeholder="Masukkan nominal top up" required min="10000">
+                        <small class="text-muted">Minimal Rp 10.000</small>
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputNominal1">Metode Pembayaran:</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="transfer_bank" id="radioDefault1">
+                            <input class="form-check-input" type="radio" name="transfer_bank" id="radioDefault1" value="1" required>
                             <label class="form-check-label" for="radioDefault1">
                                 Transfer bank
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="virtual_akun" id="radioDefault2">
+                            <input class="form-check-input" type="radio" name="virtual_akun" id="radioDefault2" value="1" required>
                             <label class="form-check-label" for="radioDefault2">
                                 Transfer virtual akun
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="minimarket" id="radioDefault3">
-                            <label class="form-check-label" for="radioDefault2">
+                            <input class="form-check-input" type="radio" name="minimarket" id="radioDefault3" value="1" required>
+                            <label class="form-check-label" for="radioDefault3">
                                 Minimarket
                             </label>
                         </div>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="exampleInputPin1">PIN</label>
-                        <input type="password" maxlength="6" pattern="[0-9]{6}" class="form-control" name="pin" placeholder="masukkan angka 0-9" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 fw-bold">Konfirmasi</button>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Lanjutkan</button>
                     <a href="profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                         <i class="bi bi-pencil me-1"></i> kembali
                     </a>

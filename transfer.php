@@ -71,7 +71,7 @@ if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] ==
             <div class="content">
                 <h3>Transfer</h3>
                     <hr />
-                    <form action="proses_transfer.php" method="post">
+                    <form action="konfirmasi_transfer.php" method="post">
                         <div class="form-group mb-2">
                             <label for="exampleInputEmail1">Email penerima:</label>
                             <input type="email" class="form-control" name="email" placeholder="masukkan email penerima"
@@ -80,18 +80,14 @@ if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] ==
                         <div class="form-group mb-2">
                             <label for="exampleInputNominal1">Nominal:</label>
                             <input type="number" class="form-control" name="nominal" id="exampleInputNominal1"
-                                placeholder="Masukkan nominal top up" required>
+                                placeholder="Masukkan nominal transfer" required min="1000">
+                            <small class="text-muted">Minimal Rp 1.000</small>
                         </div>
                         <div class="form-group mb-2">
                             <label class="form-label">Catatan (opsional)</label>
-                            <textarea name="catatan" class="form-control mb-3"></textarea>
+                            <textarea name="catatan" class="form-control mb-3" rows="2" placeholder="Tambahkan pesan (opsional)"></textarea>
                         </div>
-                        <div class="form-group mb-2">
-                            <label for="exampleInputPin1">PIN</label>
-                            <input type="text" maxlength="6" pattern="[0-9]{6}" class="form-control" name="pin"
-                                placeholder="masukkan angka 0-9" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 fw-bold">Konfirmasi</button>
+                        <button type="submit" class="btn btn-primary w-100 fw-bold">Lanjutkan</button>
                         <a href="dashboard.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                             <i class="bi bi-pencil me-1"></i> kembali
                         </a>

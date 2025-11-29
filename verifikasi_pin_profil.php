@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!preg_match('/^\d{6}$/', $konfirm_pin)) {
         echo "<script>
             alert('PIN harus 6 digit angka!');
-            window.location='verify_pin.php';
+            window.location='verikasi_pin_Profil_pin.php';
         </script>";
         exit();
     }

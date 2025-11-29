@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->close();
     $connection->close();
 } else {
-    header("Location: login_view.php");
+    header("Location: menu_login.php");
     exit();
 }
 ?>

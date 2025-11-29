@@ -9,7 +9,6 @@ if (!isset($_SESSION['id'])) {
 
 $user_id = $_SESSION['id'];
 $nominal = $_POST['nominal'];
-$pin_input = $_POST['pin'];
 
 // Ambil user
 $stmt = $connection->prepare("SELECT saldo, pin FROM users WHERE id = ?");
@@ -52,5 +51,5 @@ $stmt->execute();
 // Update session
 $_SESSION['saldo'] = $saldo_after;
 
-echo "<script>alert('Top Up Berhasil!'); window.location='dashboard.php';</script>";
+echo "<script>alert('Permintaan top-up diproses! silahkan konfirmasi detail transaksi'); window.location='dashboard.php';</script>";
 ?>
