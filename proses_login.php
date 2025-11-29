@@ -3,8 +3,24 @@ include 'connect.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
+
+    // Validasi input tidak kosong
+    if (empty($email) || empty($password)) {
+        $_SESSION['login_error'] = 'Email dan password harus diisi!';
+        $_SESSION['login_email'] = $email;
+        header("Location: menu_login.php");
+        exit();
+    }
+
+    // Validasi format email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['login_error'] = 'Format email tidak valid!';
+        $_SESSION['login_email'] = $email;
+        header("Location: menu_login.php");
+        exit();
+    }
 
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $connection->prepare($sql);
@@ -31,17 +47,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['pin'] = $user['pin'];
             $_SESSION['tanggal_lahir'] = $user['tanggal_lahir'];
             $_SESSION['status'] = 'active';
+
+            unset($_SESSION['login_error']);
+            unset($_SESSION['login_email']);
+
+            $stmt->close();
+            $connection->close();
+            
             header("Location: dashboard.php");
             exit();
         } else {
-            echo "<script>alert('Password salah!'); window.location.href='menu_login.php';</script>";
+            $_SESSION['login_error'] = 'Password yang Anda masukkan salah. Silakan coba lagi.';
+            $_SESSION['login_email'] = $email;
+            
+            $stmt->close();
+            $connection->close();
+            
+            header("Location: menu_login.php");
+            exit();
         }
     } else {
-        echo "<script>alert('Email tidak ditemukan!'); window.location.href='menu_login.php';</script>";
+        // Email tidak ditemukan
+        $_SESSION['login_error'] = 'Email tidak terdaftar. Pastikan email Anda sudah benar atau daftar terlebih dahulu.';
+        $_SESSION['login_email'] = $email;
+        
+        $stmt->close();
+        $connection->close();
+        
+        header("Location: menu_login.php");
+        exit();
     }
-
-    $stmt->close();
-    $connection->close();
 } else {
     header("Location: menu_login.php");
     exit();

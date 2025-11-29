@@ -3,6 +3,13 @@ session_start();
 if (isset($_SESSION['username'])) {
     header('location: dashboard.php');
 }
+// Ambil pesan error dari session jika ada
+$error = isset($_SESSION['login_error']) ? $_SESSION['login_error'] : '';
+$email_value = isset($_SESSION['login_email']) ? $_SESSION['login_email'] : '';
+
+// Hapus session error setelah diambil
+unset($_SESSION['login_error']);
+unset($_SESSION['login_email']);
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +25,7 @@ if (isset($_SESSION['username'])) {
 </head>
 <style>
     .back {
-        background: #2563eb;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         width: 100%;
         position: absolute;
         top: 0;
@@ -55,6 +62,13 @@ if (isset($_SESSION['username'])) {
             <div class="content">
                 <h3>Login</h3>
                 <hr />
+                <?php if (!empty($error)): ?>
+                    <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
+                        <i class="bi bi-exclamation-circle-fill me-2"></i>
+                        <strong>Login Gagal!</strong> <?= htmlspecialchars($error) ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
                 <form action="proses_login.php" method="post">
                     <div class="form-group mb-2">
                         <label for="exampleInputUsername1">Email</label>

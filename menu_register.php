@@ -18,7 +18,7 @@ if (isset($_SESSION['username'])) {
 </head>
 <style>
     .back {
-        background: #2563eb;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         width: 100%;
         position: absolute;
         top: 0;
