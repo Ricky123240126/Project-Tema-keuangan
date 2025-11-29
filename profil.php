@@ -22,7 +22,7 @@ session_start();
         }
 
         .navbar-custom {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
