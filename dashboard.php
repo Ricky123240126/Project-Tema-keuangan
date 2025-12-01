@@ -82,7 +82,7 @@ $result = $stmt->get_result();
             position: relative;
             overflow: hidden;
         }
-        
+
         /* Hiasan background card */
         .balance-card::before {
             content: '';
@@ -91,7 +91,7 @@ $result = $stmt->get_result();
             right: -20%;
             width: 300px;
             height: 300px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
         }
 
@@ -116,7 +116,7 @@ $result = $stmt->get_result();
             transition: background 0.2s;
             border-radius: 10px;
         }
-        
+
         .transaction-item:hover {
             background-color: #f8f9fa;
         }
@@ -166,19 +166,30 @@ $result = $stmt->get_result();
             </a>
 
             <div class="dropdown ms-auto">
-                <button class="btn btn-link text-white text-decoration-none dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                    <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                <button class="btn btn-link text-white text-decoration-none dropdown-toggle d-flex align-items-center"
+                    data-bs-toggle="dropdown">
+                    <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center me-2"
+                        style="width: 32px; height: 32px;">
                         <i class="bi bi-person-fill"></i>
                     </div>
                     <span class="fw-medium"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" style="border-radius: 12px;">
-                    <li><a class="dropdown-item py-2" href="profil.php"><i class="bi bi-person me-2"></i>Profil Saya</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item py-2" href="profil.php"><i class="bi bi-person me-2"></i>Profil Saya</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
                     <li>
                         <a class="dropdown-item py-2 text-danger" href="logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i>Keluar
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="delete_akun.php"
+                            onclick="return confirm('Yakin mau hapus akun? Semua data akan hilang!');">
+                            <i class="bi bi-trash me-2"></i>Hapus Akun
                         </a>
                     </li>
                 </ul>
@@ -191,7 +202,7 @@ $result = $stmt->get_result();
         <div class="balance-card">
             <div class="opacity-75"><i class="bi bi-wallet me-2"></i>Total Saldo Aktif</div>
             <div class="balance-amount">Rp <?php echo number_format($_SESSION['saldo'], 0, ',', '.'); ?></div>
-            
+
             <div class="d-flex gap-3 mt-4">
                 <a href="topup.php" class="btn btn-light fw-bold px-4 py-2 rounded-pill shadow-sm">
                     <i class="bi bi-plus-lg me-2"></i>Top Up
@@ -204,9 +215,10 @@ $result = $stmt->get_result();
 
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="fw-bold m-0 text-secondary">Riwayat Transaksi</h5>
-            
+
             <form action="search_transaksi.php" method="get" class="d-flex gap-2">
-                <select name="jenis" class="form-select form-select-sm border-0 shadow-sm" style="width: 130px; cursor: pointer;">
+                <select name="jenis" class="form-select form-select-sm border-0 shadow-sm"
+                    style="width: 130px; cursor: pointer;">
                     <option value="">Semua</option>
                     <option value="top_up">Top Up</option>
                     <option value="transfer">Transfer</option>
@@ -226,30 +238,30 @@ $result = $stmt->get_result();
             <?php else: ?>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <?php
-                        // Logika untuk menentukan jenis transaksi (Masuk/Keluar)
-                        $is_masuk = false;
-                        $label = "";
-                        $sub_label = "";
-                        
-                        if ($row['jenis_transaksi'] == 'top_up') {
-                            // Top Up selalu masuk
+                    // Logika untuk menentukan jenis transaksi (Masuk/Keluar)
+                    $is_masuk = false;
+                    $label = "";
+                    $sub_label = "";
+
+                    if ($row['jenis_transaksi'] == 'top_up') {
+                        // Top Up selalu masuk
+                        $is_masuk = true;
+                        $label = "Top Up Saldo";
+                        $sub_label = "Isi ulang via merchant/bank";
+                    } elseif ($row['jenis_transaksi'] == 'transfer') {
+                        // Cek apakah kita pengirim atau penerima
+                        if ($row['penerima_id'] == $user_id) {
+                            // Kita menerima uang
                             $is_masuk = true;
-                            $label = "Top Up Saldo";
-                            $sub_label = "Isi ulang via merchant/bank";
-                        } elseif ($row['jenis_transaksi'] == 'transfer') {
-                            // Cek apakah kita pengirim atau penerima
-                            if ($row['penerima_id'] == $user_id) {
-                                // Kita menerima uang
-                                $is_masuk = true;
-                                $label = "Terima Transfer";
-                                $sub_label = "Dari: " . htmlspecialchars($row['nama_pengirim']);
-                            } else {
-                                // Kita mengirim uang
-                                $is_masuk = false;
-                                $label = "Transfer Keluar";
-                                $sub_label = "Ke: " . htmlspecialchars($row['nama_penerima']);
-                            }
+                            $label = "Terima Transfer";
+                            $sub_label = "Dari: " . htmlspecialchars($row['nama_pengirim']);
+                        } else {
+                            // Kita mengirim uang
+                            $is_masuk = false;
+                            $label = "Transfer Keluar";
+                            $sub_label = "Ke: " . htmlspecialchars($row['nama_penerima']);
                         }
+                    }
                     ?>
 
                     <div class="transaction-item d-flex justify-content-between align-items-center">
@@ -285,9 +297,10 @@ $result = $stmt->get_result();
                 <?php endwhile; ?>
             <?php endif; ?>
         </div>
-        
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

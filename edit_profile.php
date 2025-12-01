@@ -117,8 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputPin1">PIN</label>
-                        <input type="number" class="form-control" name="pin" id="exampleInputPin1" placeholder="Pin"
-                            required>
+                        <input type="number" class="form-control" name="pin" id="exampleInputPin1" placeholder="Pin">
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputNomor1">Nomor Handphone</label>
