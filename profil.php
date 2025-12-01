@@ -311,7 +311,7 @@ session_start();
                 <a href="update_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                     <i class="bi bi-pencil me-1"></i> Update PIN Pertama Kali
                 </a>
-                <a href="verifikasi_pin_profile.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                <a href="verifikasi_pin_profil.php" class="btn btn-outline-primary btn-sm w-100 mt-3">
                     <i class="bi bi-pencil me-1"></i> Update Profil
                 </a>
             </div>
