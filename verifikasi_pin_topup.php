@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connect.php'; // Pastikan koneksi database benar
+include 'connect.php'; 
 
 if (!isset($_SESSION['id'])) {
     header('location: menu_login.php');
@@ -21,7 +21,7 @@ if (!$user) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST['konfirm_pin'])) {
     $konfirm_pin = $_POST['konfirm_pin'];
     $pin_asli = $user['pin']; 
 
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute();
 
             // B. Insert ke tabel 'transactions'
-            // Perhatikan: tabel transactions tidak punya kolom metode_pembayaran, jadi jangan dimasukkan di sini
+            // Perhatikan: tabel transactions tidak punya kolom metode_pembayaran
             $stmt = $connection->prepare("
                 INSERT INTO transactions (user_id, jenis_transaksi, nominal, saldo_sebelum, saldo_sesudah, status)
                 VALUES (?, 'top_up', ?, ?, ?, 'success')
@@ -80,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bind_param("iis", $transaction_id, $id, $metode_db);
             $stmt->execute();
 
-            // Jika semua lancar, simpan perubahan
             $connection->commit();
             
             // Hapus session

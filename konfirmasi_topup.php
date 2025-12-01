@@ -14,7 +14,6 @@ if (!isset($_SESSION['pin']) || $_SESSION['pin'] === null || $_SESSION['pin'] ==
     </script>";
     exit();
 }
-
 // Ambil data dari form topup.php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nominal = $_POST['nominal'];

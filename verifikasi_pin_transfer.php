@@ -15,11 +15,12 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $pin_input = $_POST['pin'];
+if (isset($_POST['konfirm_pin'])) {
+    $pin_input = $_POST['konfirm_pin'];
+    $pin_asli = $user['pin'];
 
     // Cek PIN
-    if ($pin_input !== $user['pin']) {
+    if ($pin_input !== $pin_asli) {
         echo "<script>alert('PIN Salah!'); window.location='verifikasi_pin_transfer.php';</script>";
         exit();
     }
@@ -84,16 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("iiids", $transaction_id, $pengirim_id, $penerima_id, $nominal, $catatan);
         $stmt->execute();
 
-        // 5. (Opsional tapi Bagus) Catat transaksi untuk Penerima juga (Uang Masuk)
-        // Agar penerima bisa lihat history saldo bertambah.
-        // Karena ENUM Anda hanya punya 'top_up' dan 'transfer', kita pakai 'transfer'
-        $stmt = $connection->prepare("
-            INSERT INTO transactions (user_id, jenis_transaksi, nominal, saldo_sebelum, saldo_sesudah, penerima_id, status)
-            VALUES (?, 'transfer', ?, ?, ?, ?, 'success')
-        ");
-        // Di sini user_id adalah penerima, penerima_id adalah pengirim (sumber dana)
-        $stmt->bind_param("idddi", $penerima_id, $nominal, $penerima['saldo'], $saldo_penerima_baru, $pengirim_id);
-        $stmt->execute();
+        // // 5. (Opsional tapi Bagus) Catat transaksi untuk Penerima juga (Uang Masuk)
+        // // Agar penerima bisa lihat history saldo bertambah.
+        // // Karena ENUM Anda hanya punya 'top_up' dan 'transfer', kita pakai 'transfer'
+        // $stmt = $connection->prepare("
+        //     INSERT INTO transactions (user_id, jenis_transaksi, nominal, saldo_sebelum, saldo_sesudah, penerima_id, status)
+        //     VALUES (?, 'transfer', ?, ?, ?, ?, 'success')
+        // ");
+        // // Di sini user_id adalah penerima, penerima_id adalah pengirim (sumber dana)
+        // $stmt->bind_param("idddi", $penerima_id, $nominal, $penerima['saldo'], $saldo_penerima_baru, $pengirim_id);
+        // $stmt->execute();
 
         // Komit Transaksi
         $connection->commit();
@@ -133,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="card bg-white">
         <h3 class="text-center mb-4">Masukkan PIN</h3>
         <form method="POST">
-            <input type="password" name="pin" class="form-control text-center fs-3 mb-3" maxlength="6" required autofocus placeholder="******">
+            <input type="password" name="konfirm_pin" class="form-control text-center fs-3 mb-3" maxlength="6" required autofocus placeholder="******">
             <button type="submit" class="btn btn-primary w-100">Konfirmasi</button>
         </form>
     </div>
